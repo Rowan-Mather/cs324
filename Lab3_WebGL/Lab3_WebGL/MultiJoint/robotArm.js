@@ -263,6 +263,7 @@ var render = function() {
     modelViewMatrix = mult(modelViewMatrix, rotate(theta[UpperArm], 0, 0, 1));
     upperArm();
 
+    // Two sides of the clamp arm.
     modelViewMatrix = mult(modelViewMatrix, translate(UPPER_ARM_WIDTH*0.8, UPPER_ARM_HEIGHT*1.8, 0.0));
     modelViewMatrix = mult(modelViewMatrix, rotate(theta[Clamp], 0, 0, 1));
     clamp();
