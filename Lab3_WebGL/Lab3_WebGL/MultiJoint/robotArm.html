@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+    attribute  vec4 vPosition;
+attribute  vec4 vColor;
+varying vec4 fColor;
+varying vec3 scaleFactor;
+uniform mat4 modelViewMatrix;
+uniform mat4 projectionMatrix;
+
+void main()
+{
+    
+    /// *** Changed Code HERE - added a scale factor to fix the size of the object
+    scaleFactor = vec3(-2.5,-2.5,-2.5);
+    mat4 scale = mat4(scaleFactor.x,0,0,0,
+    0,scaleFactor.y,0,0,
+    0,0,scaleFactor.z,0,
+    0,0,0,1);
+    ///
+    fColor = vColor;
+    gl_Position =  projectionMatrix * modelViewMatrix * scale * vPosition;
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+
+    precision mediump float;
+
+varying  vec4 fColor;
+
+void main()
+{
+    gl_FragColor = fColor;
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="robotArm.js"></script>
+
+<div>
+    body angle -180 <input id="slider1" type="range" min="-180" max="180" step="10" value="0" />
+    180
+</div><br />
+
+<div>
+    lower arm angle -180 <input id="slider2" type="range" min="-180" max="180" step="10" value="0" />
+    180
+</div><br />
+
+<div>
+    upper arm angle -180 <input id="slider3" type="range" min="-180" max="180" step="10" value="0" />
+    180
+</div><br />
+<div>
+    clamp angle 0 <input id="slider4" type="range" min="0" max="9" step="0.5" value="0" />
+    9
+</div><br />
+
+
+<body>
+    <canvas id="gl-canvas" width="512" height=" 512">
+        Oops ... your browser doesn't support the HTML5 canvas element
+    </canvas>
+</body>
+
+</html>
