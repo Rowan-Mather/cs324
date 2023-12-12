@@ -29,16 +29,26 @@ var vb = vec4(0.0, 0.942809, 0.333333, 1);
 var vc = vec4(-0.816497, -0.471405, 0.333333, 1);
 var vd = vec4(0.816497, -0.471405, 0.333333, 1);
 
+// cube vertices
+var ca = vec4(-1.0, 1.0, -1.0, 1);
+var cb = vec4(1.0, 1.0, -1.0, 1);
+var cc = vec4(-1.0, -1.0, -1.0, 1);
+var cd = vec4(1.0, -1.0, -1.0, 1);
+var ce = vec4(-1.0, 1.0, 1.0, 1);
+var cf = vec4(1.0, 1.0, 1.0, 1);
+var cg = vec4(-1.0, -1.0, 1.0, 1);
+var ch = vec4(1.0, -1.0, 1.0, 1);
+
 // light source specifications:
 var lightPosition = vec4(1.0, 1.0, 1.0, 1.0);
-var lightAmbient = vec4(0.2, 0.2, 0.2, 1.0);
+var lightAmbient = vec4(0.2, 0.2, 0.3, 1.0);
 var lightDiffuse = vec4(1.0, 1.0, 1.0, 1.0);
-var lightSpecular = vec4(1.0, 1.0, 1.0, 1.0);
+var lightSpecular = vec4(1, 0.5, 1.0, 1.0);
 
-var materialAmbient = vec4(1.0, 0.0, 1.0, 1.0);
-var materialDiffuse = vec4(0.0, 0.8, 1.0, 1.0);
-var materialSpecular = vec4(1.0, 1.0, 1.0, 0.1);
-var materialShininess = 20.0;
+var materialAmbient = vec4(1.0, 1.0, 1.0, 1.0);
+var materialDiffuse = vec4(0.7, 0.0, 0.0, 1.0);
+var materialSpecular = vec4(0, 0.8, 0.8, 0.0);
+var materialShininess = 100.0;
 
 
 var modelViewMatrix, projectionMatrix;
@@ -56,6 +66,15 @@ function tetrahedron(a, b, c, d, n) {
     divideTriangle(d, c, b, n);
     divideTriangle(a, d, b, n);
     divideTriangle(a, c, d, n);
+}
+
+function cube(a, b, c, d, e, f, g, h, n) {
+    divideSquare(a, b, c, d, n);
+    divideSquare(b, f, d, h, n);
+    divideSquare(f, e, h, g, n);
+    divideSquare(e, a, g, c, n);
+    divideSquare(a, e, b, f, n);
+    divideSquare(c, g, d, h, n);
 }
 
 function divideTriangle(a, b, c, count) {
@@ -82,6 +101,33 @@ function divideTriangle(a, b, c, count) {
     }
 }
 
+function divideSquare(a, b, c, d, count) {
+    if (count > 0) {
+
+        // this finds the midpoint between two vertices
+        var ab = mix(a, b, 0.5);
+        var ac = mix(a, c, 0.5);
+        var cd = mix(c, d, 0.5);
+        var bd = mix(b, d, 0.5);
+        var ad = mix(a, d, 0.5);
+
+        // we normalise the bisectors obtained by normalise them so that they have a unit length
+        ab = normalize(ab, true); // the TRUE parameter here indicates that we are normalising 
+        // the homogeneous representation of a point and that the fourth 
+        // component of 1 should not be used in the normalisation.
+        ac = normalize(ac, true);
+        cd = normalize(cd, true);
+        bd = normalize(bd, true);
+        ad = normalize(ad, true);
+
+        divideSquare(a, ab, ac, ad, count - 1);
+        divideSquare(ab, b, ad, bd, count - 1);
+        divideSquare(ac, ad, c, cd, count - 1);
+        divideSquare(ad, bd, cd, d, count - 1);
+    } else {
+        square(a, b, c, d);
+    }
+}
 
 function triangle(a, b, c) {
 
@@ -93,19 +139,52 @@ function triangle(a, b, c) {
     // normals are vectors
     var t1 = subtract(b, a);
     var t2 = subtract(c, b);
+
     var normal = cross(t1, t2);
     var normal = vec4(normal[0], normal[1], normal[2], 0.0);
+    // Ex1: Making the normal the sphere position
+    //var normal = vec4(a, b, c, 0.0);
+
     // we need to specify a normal for each vertex
     for (let idx = 0; idx < 3; idx++) {
         normalsArray.push(normal);
     }
 
-
     index += 3;
 
 }
 
+function square(a, b, c, d) {
 
+    // add the vertex position into the vertex array
+    pointsArray.push(a);
+    pointsArray.push(b);
+    pointsArray.push(c);
+    pointsArray.push(b);
+    pointsArray.push(c);
+    pointsArray.push(d);
+
+    // normals are vectors
+    var t1 = subtract(b, a);
+    var t2 = subtract(c, b);
+
+    //var normal = cross(t1, t2);
+    //var normal = vec4(normal[0], normal[1], normal[2], 0.0);
+    // Ex1: Making the normal the sphere position
+    var normal1 = vec4(a, b, c, 0.0);
+    var normal2 = vec4(b, c, d, 0.0);
+
+    // we need to specify a normal for each vertex
+    for (let idx = 0; idx < 6; idx++) {
+        normalsArray.push(normal1);
+    }
+    //for (let idx = 0; idx < 3; idx++) {
+    //    normalsArray.push(normal2);
+    //}
+
+    index += 6;
+
+}
 
 
 window.onload = function init() {
@@ -134,7 +213,8 @@ window.onload = function init() {
     var specularProduct = mult(lightSpecular, materialSpecular);
 
 
-    tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
+    //tetrahedron(va, vb, vc, vd, numTimesToSubdivide);
+    cube(ca, cb, cc, cd, ce, cf, cg, ch, numTimesToSubdivide);
 
     var nBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, nBuffer);
