@@ -4,7 +4,6 @@ import { TrackballControls } from '../Common/examples/jsm/controls/TrackballCont
 let camera, controls, scene, renderer, canvas;
 
 
-
 function init() {
 
     

@@ -16,7 +16,10 @@ function main() {
     const far = 10;
     camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
   
+    camera.position.x = 0.7;
+    camera.position.y = -0.2;
     camera.position.z = 2;
+    camera.rotateX(0.3);
   
     renderer = new THREE.WebGLRenderer({canvas});
     
@@ -27,7 +30,7 @@ function main() {
     const boxDepth = 1;
     const geometry = new THREE.BoxGeometry(boxWidth, boxHeight, boxDepth);
   
-    const material = new THREE.MeshBasicMaterial({color: 0xFF0000});  
+    const material = new THREE.MeshBasicMaterial({color: 0xAA00F2});  
     const cube = new THREE.Mesh(geometry, material);
     scene.add(cube);
   
