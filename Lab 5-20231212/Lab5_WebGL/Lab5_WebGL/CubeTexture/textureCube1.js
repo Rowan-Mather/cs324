@@ -17,10 +17,10 @@ var texCoordsArray = [];
 var texture;
 
 var texCoord = [
-    vec2(1, 0),
+    vec2(0.5, 0),
     vec2(0, 0),
-    vec2(0, 1),
-    vec2(1, 1)
+    vec2(0, 0.5),
+    vec2(0.5, 0.5)
     
 ];
 
@@ -53,8 +53,6 @@ var axis = xAxis;
 var theta = [45.0, 45.0, 45.0];
 
 var thetaLoc;
-
-
 
 function configureTexture( image ) {
 
@@ -144,7 +142,7 @@ window.onload = function init() {
 
     var image = new Image();
     
-    image.src = "./Resources/uv-maptemplate.jpg"
+    image.src = "./Resources/spirit.jpg"
 
     image.onload = function() {
        configureTexture( image );
@@ -200,4 +198,4 @@ var render = function(){
 
 function isPowerOf2(value) {
     return (value & (value - 1)) === 0;
-  }
+}

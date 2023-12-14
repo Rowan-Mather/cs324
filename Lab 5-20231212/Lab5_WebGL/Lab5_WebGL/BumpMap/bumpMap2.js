@@ -148,7 +148,6 @@ window.onload = function init() {
     gl.enableVertexAttribArray(vTexCoord);
 
 
-
     configureTexture(normals);
 
     var diffuseProduct = mult(lightDiffuse, materialDiffuse);
