@@ -1,4 +1,4 @@
-import * as THREE from '../../three/build/three.module.js';
+import * as THREE from '../Common/build/three.module.js';
 
 function main() {
   const canvas = document.getElementById( "gl-canvas" );
