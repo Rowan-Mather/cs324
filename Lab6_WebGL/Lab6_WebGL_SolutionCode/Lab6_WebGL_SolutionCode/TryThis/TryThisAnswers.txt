@@ -1,3 +1,0 @@
-Changing the value of diffuse alters how much the trace behind each particle spreads out behind it.
-
-Lowering this value increases the amount of spread while raising it decreases the amount of spread.
