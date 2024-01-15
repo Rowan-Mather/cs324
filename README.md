@@ -1,0 +1,1 @@
+This is the content of the computer graphics module written using webGL, including my lab solutions and final piece of coursework. I created a small game using Three js, demoing different lighting types, shading methods, textures and ways to import models.
