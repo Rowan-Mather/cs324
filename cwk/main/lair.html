@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>CS324: Lair</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="./default.css">
+
+</head>
+
+<body>
+    <video id="watertexture" playsinline webkit-playsinline muted loop autoplay width="2048" height="512" src="../textures/watervid.webm" style="display: none;" rotate="90deg"></video>
+    <div id="blocker">
+        <div id="menu">
+            <p></p>
+            <p></p>
+            <p>Lair de La Lune</p>
+            <p></p>
+            <p style="font-size:20px">Arrow keys or ASDW to move.</p>
+            <p style="font-size:20px">Don't hit the rocks!</p>
+            <p style="font-size:20px">Click to shoot when floating over the red target.</p>
+            <p style="font-size:20px">Click to begin...</p>
+        </div>
+        <div id="success">
+            <p></p>
+            <p style="font-size:36px">
+                The dragon is defeated!
+            </p>
+        </div>
+        <div id="loading">
+            <p></p>
+            <p style="font-size:40px">
+                You have reached the inner cave. 
+                Loading...
+            </p>
+        </div>
+        <div id="failure">
+            <p></p>
+            <p style="font-size:40px">
+                You crashed your boat.
+            </p>
+        </div>
+    </div>
+    <div id="centreblocker">
+        <div id="shoot">
+            <p style="font-size:100px">
+                +
+            </p>
+        </div>
+    </div>
+   <script type="module" charset="UTF-8" src="./Lair.js"></script>
+</body>
+
+</html>
